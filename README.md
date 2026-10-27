@@ -42,6 +42,11 @@ Her telefona göre tasarlanır: olmayan donanımın araçları gizlenmez, **pasi
 
 ## Derleme
 
+**Bilgisayarda kurulum gerekmeden:** `main` dalına her gönderimde GitHub Actions testleri koşturur ve deneme APK'sını üretir.
+APK, deponun Releases sayfasındaki **Deneme derlemesi** (ön sürüm) altında `NexTools-deneme.apk` olarak bulunur.
+Elle başlatmak için: Actions → Derleme → Run workflow.
+
+
 Gerekenler: Android Studio (Ladybug veya daha yeni), JDK 17+, Android SDK 35. Kütüphane sürümleri NexYapı ile aynıdır.
 
 ```powershell

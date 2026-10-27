@@ -34,6 +34,17 @@ android {
     }
 
     signingConfigs {
+        // Deneme derlemeleri her bilgisayarda ve GitHub'da aynı anahtarla imzalansın (üstüne kurulabilsin).
+        // Yalnızca .debug paketi içindir; gerçek sürüm anahtarı depoya girmez.
+        getByName("debug") {
+            val ciKey = rootProject.file("tools/ci/debug.keystore")
+            if (ciKey.exists()) {
+                storeFile = ciKey
+                storePassword = "android"
+                keyAlias = "androiddebugkey"
+                keyPassword = "android"
+            }
+        }
         create("release") {
             if (keystoreProps.isNotEmpty()) {
                 storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))

@@ -19,3 +19,6 @@ __pycache__/
 
 # Tasarım taslağı (yalnızca yerel; plan bilgisi içerir)
 docs/NexTools-Taslak.md
+
+# Deneme (debug) imza anahtarı bilerek depoda: herkesin derlemesi aynı imzayı taşısın
+!tools/ci/debug.keystore

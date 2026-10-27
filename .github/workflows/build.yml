@@ -1,0 +1,53 @@
+name: Derleme
+
+# main dalına her gönderimde ve elle (Actions → Derleme → Run workflow) çalışır.
+# Testleri koşturur, deneme APK'sını üretir ve "derleme" etiketli ön sürüme yükler.
+# Ön sürüm olduğu için uygulamanın güncelleme denetimi bunu görmez.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: derleme
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Testler ve deneme APK'sı
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon :core:test :app:assembleDebug
+
+      - name: APK'yı adlandır
+        run: cp app/build/outputs/apk/debug/app-debug.apk NexTools-deneme.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NexTools-deneme
+          path: NexTools-deneme.apk
+
+      - name: Ön sürümü güncelle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete derleme --yes --cleanup-tag || true
+          gh release create derleme NexTools-deneme.apk \
+            --prerelease \
+            --target "$GITHUB_SHA" \
+            --title "Deneme derlemesi" \
+            --notes "Otomatik deneme derlemesi (commit ${GITHUB_SHA::7}). Kurmak için APK'yı telefona indirip açın. Paket adı com.eirahoutmoss.nextools.debug; asıl sürümle yan yana kurulur."
