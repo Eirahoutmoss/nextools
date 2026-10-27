@@ -36,13 +36,14 @@ fun MeasureOverlay(
     frozen: Bitmap?,
     points: SnapshotStateList<Offset>,
     onView: (PreviewView) -> Unit,
+    onFrame: ((androidx.camera.core.ImageProxy) -> Unit)? = null,
     draw: DrawScope.(List<Offset>) -> Unit,
 ) {
     Box(Modifier.fillMaxWidth().aspectRatio(MEASURE_ASPECT).clip(RoundedCornerShape(16.dp))) {
         if (frozen != null) {
             Image(frozen.asImageBitmap(), null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         } else {
-            CameraPreview(Modifier.fillMaxSize(), onView = onView)
+            CameraPreview(Modifier.fillMaxSize(), onView = onView, onFrame = onFrame)
         }
         Canvas(
             Modifier.fillMaxSize().pointerInput(Unit) {

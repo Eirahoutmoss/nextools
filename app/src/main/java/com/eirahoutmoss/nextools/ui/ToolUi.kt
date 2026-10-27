@@ -176,6 +176,12 @@ object ToolUi {
         ToolId.SPEAKER_MIC_TEST -> R.string.tool_speaker_mic_test_info
         ToolId.PROTRACTOR -> R.string.tool_protractor_info
         ToolId.RULER -> R.string.tool_ruler_info
+        ToolId.GAIT -> R.string.tool_gait_info
+        ToolId.COLOR_TEMPERATURE -> R.string.tool_color_temperature_info
+        ToolId.PH_READER -> R.string.tool_ph_reader_info
+        ToolId.SONAR -> R.string.tool_sonar_info
+        ToolId.SPEED_VIDEO -> R.string.tool_speed_video_info
+        ToolId.IR_REMOTE -> R.string.tool_ir_remote_info
         else -> null
     }
 
@@ -298,6 +304,8 @@ object ToolUi {
         "similarity" -> R.string.sum_similarity
         "rms_change" -> R.string.sum_rms_change
         "uncertainty" -> R.string.sum_uncertainty
+        "variability" -> R.string.sum_variability
+        "asymmetry" -> R.string.sum_asymmetry
         else -> R.string.sum_value
     }
 
@@ -395,6 +403,15 @@ object ToolUi {
         "peak_ut" -> R.string.col_peak_ut
         "rpm" -> R.string.col_rpm
         "change_3h_hpa" -> R.string.col_change_3h
+        "step_s" -> R.string.col_step_s
+        "cadence" -> R.string.col_cadence
+        "cct_k" -> R.string.col_cct
+        "cie_x" -> R.string.col_cie_x
+        "cie_y" -> R.string.col_cie_y
+        "ph" -> R.string.col_ph
+        "delta_e" -> R.string.col_delta_e
+        "confidence" -> R.string.col_confidence
+        "time_s" -> R.string.col_time_s
         else -> R.string.col_value
     }
 }

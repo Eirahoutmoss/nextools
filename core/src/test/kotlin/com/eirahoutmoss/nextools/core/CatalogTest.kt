@@ -39,6 +39,7 @@ class CatalogTest {
                 ToolId.SPECTROSCOPE, ToolId.COSMIC_RAY,
                 ToolId.MAGNET_STRENGTH, ToolId.TACHOMETER, ToolId.WEATHER_TREND, ToolId.METRONOME,
                 ToolId.SPEAKER_MIC_TEST, ToolId.PROTRACTOR, ToolId.RULER,
+                ToolId.GAIT, ToolId.COLOR_TEMPERATURE, ToolId.PH_READER, ToolId.SONAR, ToolId.SPEED_VIDEO, ToolId.IR_REMOTE,
             ),
             done,
         )
@@ -52,12 +53,13 @@ class CatalogTest {
         assertTrue(Availability.evaluate(ToolCatalog[ToolId.LEVEL], caps) is ToolStatus.Ready)
     }
 
-    @Test fun luxWithoutLightSensorButCameraWaitsForCameraMode() {
+    @Test fun luxWithoutLightSensorUsesCameraMode() {
         val caps = DeviceCapabilities.of(Hardware.CAMERA)
         val s = Availability.evaluate(ToolCatalog[ToolId.LUX], caps)
-        assertTrue(s is ToolStatus.FallbackPending)
-        assertEquals("camera", (s as ToolStatus.FallbackPending).pendingMode)
-        assertTrue(s.hardwareOk)
+        assertTrue(s is ToolStatus.Ready)
+        s as ToolStatus.Ready
+        assertTrue(s.fallback)
+        assertEquals("camera", s.requirement.mode)
     }
 
     @Test fun luxWithNeitherIsMissing() {
@@ -77,7 +79,7 @@ class CatalogTest {
         val caps = DeviceCapabilities.of(*Hardware.entries.toTypedArray())
         val sum = Availability.summarize(Availability.evaluateAll(caps))
         assertEquals(sum.total, sum.hardwareOk)
-        assertEquals(48, sum.usableNow)
+        assertEquals(54, sum.usableNow)
     }
 
     @Test fun noHardwareStillAllowsDeviceTools() {

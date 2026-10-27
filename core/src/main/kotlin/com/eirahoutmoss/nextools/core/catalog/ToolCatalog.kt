@@ -114,9 +114,8 @@ object ToolCatalog {
         implemented = done, calibrationRecommended = calibration, recordable = recordable,
     )
 
-    /** Yazılmış araç / henüz yazılmamış ("Yakında" kartı). */
+    /** Yazılmış araç. Yeni bir araç kataloğa önce `false` ile eklenir ve "Yakında" kartı olarak görünür. */
     private const val DONE = true
-    private const val SOON = false
 
     val all: List<ToolSpec> = listOf(
         // 3.1
@@ -127,7 +126,7 @@ object ToolCatalog {
         t(ToolId.ROAD_QUALITY, Category.MOTION, Rarity.EVERY_PHONE, req(ACCELEROMETER, GNSS), DONE),
         t(ToolId.DRIVING_PROFILE, Category.MOTION, Rarity.EVERY_PHONE, req(ACCELEROMETER, GYROSCOPE, GNSS), DONE),
         t(ToolId.PROTRACTOR, Category.MOTION, Rarity.EVERY_PHONE, req(ACCELEROMETER, CAMERA), DONE),
-        t(ToolId.GAIT, Category.MOTION, Rarity.EVERY_PHONE, req(ACCELEROMETER, GYROSCOPE), SOON),
+        t(ToolId.GAIT, Category.MOTION, Rarity.EVERY_PHONE, req(ACCELEROMETER, GYROSCOPE), DONE),
         t(ToolId.TACHOMETER, Category.MOTION, Rarity.MOST_PHONES, req(GYROSCOPE), DONE),
         // 3.2 (pusula eğim dengelemesi için ivmeölçere de ihtiyaç duyar)
         t(ToolId.COMPASS, Category.MAGNETIC, Rarity.EVERY_PHONE, req(MAGNETOMETER, ACCELEROMETER), DONE),
@@ -140,31 +139,31 @@ object ToolCatalog {
         t(ToolId.FLOOR_COUNTER, Category.PRESSURE, Rarity.MOST_PHONES, req(BAROMETER), DONE),
         t(ToolId.WEATHER_TREND, Category.PRESSURE, Rarity.MOST_PHONES, req(BAROMETER), DONE),
         t(ToolId.AIRTIGHTNESS, Category.PRESSURE, Rarity.MOST_PHONES, req(BAROMETER), DONE),
-        // 3.4 — lüksmetre ortam ışığı sensörü yoksa kamerayla çalışacak (o yol henüz yazılmadı)
+        // Lüksmetre: ortam ışığı sensörü yoksa kameranın pozlamasıyla (kaba) çalışır
         t(
             ToolId.LUX, Category.LIGHT, Rarity.EVERY_PHONE,
-            listOf(Requirement(setOf(LIGHT)), Requirement(setOf(CAMERA), mode = "camera", implemented = false)),
+            listOf(Requirement(setOf(LIGHT)), Requirement(setOf(CAMERA), mode = "camera")),
             DONE, calibration = true,
         ),
         t(ToolId.FLICKER, Category.LIGHT, Rarity.EVERY_PHONE, req(CAMERA), DONE),
         t(ToolId.COLOR_PICKER, Category.LIGHT, Rarity.EVERY_PHONE, req(CAMERA), DONE),
-        t(ToolId.COLOR_TEMPERATURE, Category.LIGHT, Rarity.EVERY_PHONE, req(CAMERA), SOON),
+        t(ToolId.COLOR_TEMPERATURE, Category.LIGHT, Rarity.EVERY_PHONE, req(CAMERA), DONE),
         t(ToolId.SPECTROSCOPE, Category.LIGHT, Rarity.EVERY_PHONE, req(CAMERA), DONE),
-        t(ToolId.PH_READER, Category.LIGHT, Rarity.EVERY_PHONE, req(CAMERA), SOON),
+        t(ToolId.PH_READER, Category.LIGHT, Rarity.EVERY_PHONE, req(CAMERA), DONE),
         // 3.5
         t(ToolId.SOUND_LEVEL, Category.SOUND, Rarity.EVERY_PHONE, req(MICROPHONE), DONE, calibration = true),
         t(ToolId.SPECTRUM, Category.SOUND, Rarity.EVERY_PHONE, req(MICROPHONE), DONE),
         t(ToolId.TUNER, Category.SOUND, Rarity.EVERY_PHONE, req(MICROPHONE), DONE),
         t(ToolId.TONE_GENERATOR, Category.SOUND, Rarity.EVERY_PHONE, req(SPEAKER), DONE, recordable = false),
         t(ToolId.RT60, Category.SOUND, Rarity.EVERY_PHONE, req(SPEAKER, MICROPHONE), DONE),
-        t(ToolId.SONAR, Category.SOUND, Rarity.MOST_PHONES, req(SPEAKER, MICROPHONE), SOON),
+        t(ToolId.SONAR, Category.SOUND, Rarity.MOST_PHONES, req(SPEAKER, MICROPHONE), DONE),
         t(ToolId.METRONOME, Category.SOUND, Rarity.EVERY_PHONE, req(SPEAKER), DONE, recordable = false),
         // 3.6
         t(ToolId.RULER, Category.CAMERA, Rarity.EVERY_PHONE, req(CAMERA), DONE),
         t(ToolId.MAGNIFIER, Category.CAMERA, Rarity.EVERY_PHONE, req(CAMERA), DONE, recordable = false),
         t(ToolId.PULSE, Category.CAMERA, Rarity.EVERY_PHONE, req(CAMERA, FLASH), DONE),
         t(ToolId.COSMIC_RAY, Category.CAMERA, Rarity.EVERY_PHONE, req(CAMERA), DONE),
-        t(ToolId.SPEED_VIDEO, Category.CAMERA, Rarity.EVERY_PHONE, req(CAMERA), SOON),
+        t(ToolId.SPEED_VIDEO, Category.CAMERA, Rarity.EVERY_PHONE, req(CAMERA), DONE),
         t(ToolId.QR, Category.CAMERA, Rarity.EVERY_PHONE, req(CAMERA), DONE, recordable = false),
         // 3.7
         t(ToolId.GPS_STATUS, Category.LOCATION, Rarity.EVERY_PHONE, req(GNSS), DONE),
@@ -179,7 +178,7 @@ object ToolCatalog {
         t(ToolId.UWB_RANGE, Category.WIRELESS, Rarity.FEW_PHONES, req(UWB), DONE),
         t(ToolId.NFC_READER, Category.WIRELESS, Rarity.MOST_PHONES, req(NFC), DONE, recordable = false),
         t(ToolId.ID_CARD, Category.WIRELESS, Rarity.MOST_PHONES, req(NFC), DONE, recordable = false),
-        t(ToolId.IR_REMOTE, Category.WIRELESS, Rarity.FEW_PHONES, req(IR_EMITTER), SOON, recordable = false),
+        t(ToolId.IR_REMOTE, Category.WIRELESS, Rarity.FEW_PHONES, req(IR_EMITTER), DONE, recordable = false),
         // 3.9
         t(ToolId.DEVICE_REPORT, Category.DEVICE, Rarity.EVERY_PHONE, NONE, DONE, recordable = false),
         t(ToolId.BATTERY, Category.DEVICE, Rarity.EVERY_PHONE, NONE, DONE),

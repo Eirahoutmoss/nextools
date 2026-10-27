@@ -16,6 +16,7 @@ from strings_part3 import S3, INFO3
 from strings_part4 import S4, INFO4
 from strings_part5 import S5, INFO5
 from strings_part6 import S6, INFO6
+from strings_part7 import S7, INFO7
 
 RES = sys.argv[1]
 SRC = sys.argv[2]
@@ -27,13 +28,14 @@ entries.update(S3)
 entries.update(S4)
 entries.update(S5)
 entries.update(S6)
+entries.update(S7)
 for k, v in COLORS.items():
     entries[f"color_{k}"] = v
 for key, ((tn, td, tl), (en, ed, el)) in TOOLS.items():
     entries[f"tool_{key}_name"] = (tn, en)
     entries[f"tool_{key}_desc"] = (td, ed)
     entries[f"tool_{key}_limits"] = (NO_LIMIT[0] if tl == "—" else tl, NO_LIMIT[1] if el == "—" else el)
-for key, (ti, ei) in list(INFO.items()) + list(INFO2.items()) + list(INFO3.items()) + list(INFO4.items()) + list(INFO5.items()) + list(INFO6.items()):
+for key, (ti, ei) in list(INFO.items()) + list(INFO2.items()) + list(INFO3.items()) + list(INFO4.items()) + list(INFO5.items()) + list(INFO6.items()) + list(INFO7.items()):
     entries[f"tool_{key}_info"] = (ti, ei)
 
 def esc(s: str) -> str:

@@ -29,6 +29,9 @@ fun CameraPreview(
     onCamera: (Camera) -> Unit = {},
     onView: (PreviewView) -> Unit = {},
     onFrame: ((ImageProxy) -> Unit)? = null,
+    /** Kamera isteği ayarları (Camera2Interop ile pozlama, beyaz denge…); önizleme ve çözümleme birlikte etkilenir. */
+    configure: ((ImageAnalysis.Builder) -> Unit)? = null,
+    front: Boolean = false,
 ) {
     val context = LocalContext.current
     val owner = LocalLifecycleOwner.current
@@ -46,13 +49,14 @@ fun CameraPreview(
             if (onFrame != null) {
                 val analysis = ImageAnalysis.Builder()
                     .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                    .also { b -> configure?.invoke(b) }
                     .build()
                 analysis.setAnalyzer(executor) { img -> try { frame.value?.invoke(img) } finally { img.close() } }
                 useCases += analysis
             }
             runCatching {
                 p.unbindAll()
-                val cam = p.bindToLifecycle(owner, CameraSelector.DEFAULT_BACK_CAMERA, *useCases.toTypedArray())
+                val cam = p.bindToLifecycle(owner, if (front) CameraSelector.DEFAULT_FRONT_CAMERA else CameraSelector.DEFAULT_BACK_CAMERA, *useCases.toTypedArray())
                 onCamera(cam)
                 onView(previewView)
             }
@@ -127,4 +131,30 @@ fun screenLineProfile(img: ImageProxy, halfBand: Int = 6): LineProfile {
         rr[k] = rs / n; gg[k] = gs / n; bb[k] = bs / n
     }
     return LineProfile(rr, gg, bb)
+}
+
+/**
+ * Ekranda yatay eksen boyunca parlaklık profili: her ekran sütunu için, ekranın dikey ortasındaki
+ * [band] oranlık şeridin ortalama parlaklığı (0..255). Video ile hız ölçerin kapıları için.
+ */
+fun screenColumnLuma(img: ImageProxy, band: Float = 0.6f, step: Int = 4): DoubleArray {
+    val rot = img.imageInfo.rotationDegrees
+    val alongX = rot % 180 == 0
+    val len = if (alongX) img.width else img.height
+    val cross = if (alongX) img.height else img.width
+    val reverse = rot == 90 || rot == 180
+    val y = img.planes[0]
+    val c0 = (cross * (1 - band) / 2).toInt(); val c1 = (cross * (1 + band) / 2).toInt()
+    return DoubleArray(len) { k ->
+        val along = if (reverse) len - 1 - k else k
+        var s = 0L; var n = 0
+        var c = c0
+        while (c < c1) {
+            val i = if (alongX) along else c
+            val j = if (alongX) c else along
+            s += y.buffer.get(j * y.rowStride + i * y.pixelStride).toInt() and 0xFF; n++
+            c += step
+        }
+        if (n == 0) 0.0 else s.toDouble() / n
+    }
 }

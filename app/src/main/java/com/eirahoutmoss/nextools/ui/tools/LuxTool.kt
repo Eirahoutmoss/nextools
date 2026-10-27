@@ -33,6 +33,8 @@ import com.eirahoutmoss.nextools.ui.Fmt
 import com.eirahoutmoss.nextools.ui.appContainer
 import com.eirahoutmoss.nextools.ui.components.BadgeLevel
 import com.eirahoutmoss.nextools.ui.components.BigReadout
+import com.eirahoutmoss.nextools.ui.components.NoticeBanner
+import com.eirahoutmoss.nextools.ui.components.CameraLuxSource
 import com.eirahoutmoss.nextools.ui.components.LiveChart
 import com.eirahoutmoss.nextools.ui.components.MeterBar
 import com.eirahoutmoss.nextools.ui.components.NumberInputDialog
@@ -105,11 +107,22 @@ fun LuxTool(onBack: () -> Unit, onOpenRecord: (String) -> Unit) {
         onCalibrate = { calibrating = true },
         infoExtra = { SensorInfo(sensor) },
     ) {
+        if (sensor == null) {
+            NoticeBanner(stringResource(R.string.lux_camera_mode), BadgeLevel.NEUTRAL)
+            PermissionGate(android.Manifest.permission.CAMERA, stringResource(R.string.camera_rationale)) {
+                CameraLuxSource { v ->
+                    val now = System.nanoTime()
+                    val lux = v * factor
+                    if (rec.isRecording && recT.ready(now)) rec.add(doubleArrayOf(lux))
+                    if (!frozen && ui.ready(now)) { raw = v; stats.add(lux); series.add(Units.illuminance(lux, units).toFloat()) }
+                }
+            }
+        }
         if (raw.isNaN()) { Text(stringResource(R.string.waiting_sensor)); return@ToolScaffold }
         val lux = raw * factor
         BigReadout(
             value = Fmt.num(Units.illuminance(lux, units), if (lux < 10) 1 else 0), unit = Units.illuminanceSymbol(units),
-            badge = stringResource(if (calibrated) R.string.badge_calibrated else R.string.lux_badge_uncal),
+            badge = stringResource(if (calibrated) R.string.badge_calibrated else if (sensor == null) R.string.lux_badge_camera else R.string.lux_badge_uncal),
             badgeLevel = if (calibrated) BadgeLevel.GOOD else BadgeLevel.APPROX,
         )
         StatRow(

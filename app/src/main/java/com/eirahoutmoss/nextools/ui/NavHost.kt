@@ -49,6 +49,12 @@ import com.eirahoutmoss.nextools.ui.screens.NotebookScreen
 import com.eirahoutmoss.nextools.ui.screens.RecordDetailScreen
 import com.eirahoutmoss.nextools.ui.screens.SettingsScreen
 import com.eirahoutmoss.nextools.ui.tools.AirtightnessTool
+import com.eirahoutmoss.nextools.ui.tools.ColorTemperatureTool
+import com.eirahoutmoss.nextools.ui.tools.GaitTool
+import com.eirahoutmoss.nextools.ui.tools.IrRemoteTool
+import com.eirahoutmoss.nextools.ui.tools.PhReaderTool
+import com.eirahoutmoss.nextools.ui.tools.SonarTool
+import com.eirahoutmoss.nextools.ui.tools.SpeedVideoTool
 import com.eirahoutmoss.nextools.ui.tools.MagnetStrengthTool
 import com.eirahoutmoss.nextools.ui.tools.MetronomeTool
 import com.eirahoutmoss.nextools.ui.tools.ProtractorTool
@@ -245,6 +251,12 @@ fun NexToolsRoot() {
                     ToolId.SPEAKER_MIC_TEST -> SpeakerMicTestTool(back)
                     ToolId.PROTRACTOR -> ProtractorTool(back)
                     ToolId.RULER -> RulerTool(back)
+                    ToolId.GAIT -> GaitTool(back, openRecord)
+                    ToolId.COLOR_TEMPERATURE -> ColorTemperatureTool(back, openRecord)
+                    ToolId.PH_READER -> PhReaderTool(back, openRecord)
+                    ToolId.SONAR -> SonarTool(back, openRecord)
+                    ToolId.SPEED_VIDEO -> SpeedVideoTool(back, openRecord)
+                    ToolId.IR_REMOTE -> IrRemoteTool(back)
                     else -> LaunchedEffect(Unit) { nav.popBackStack() }
                 }
             }

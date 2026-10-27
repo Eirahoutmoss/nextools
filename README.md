@@ -18,16 +18,15 @@ Her telefona göre tasarlanır: olmayan donanımın araçları gizlenmez, **pasi
 | Laboratuvar Defteri: kayıt, not, etiket, fotoğraf, konum (izinle), iki kaydı karşılaştırma | ✅ |
 | Dışa aktarma: CSV (ham veri), JSON, PDF rapor | ✅ |
 | Uygulama içi güncelleme (GitHub, SHA-256 + imza denetimi — Nex standardı) | ✅ |
-| Hareket: Su Terazisi, Titreşim Ölçer, Sismograf, Makine Sağlığı, Yol Kalitesi, Sürüş Profili, Açı Ölçer, Dönüş Ölçer | ✅ |
+| Hareket: Su Terazisi, Titreşim Ölçer, Sismograf, Makine Sağlığı, Yol Kalitesi, Sürüş Profili, Açı Ölçer, Yürüyüş Analizi, Dönüş Ölçer | ✅ |
 | Manyetik: Pusula, Manyetik Alan, Metal Bulucu, Mıknatıs Gücü | ✅ |
 | Basınç: Barometre, Altimetre, Kat Sayacı, Hava Eğilimi, Sızdırmazlık | ✅ |
-| Işık: Lüksmetre, Işık Titreşimi, Renk Ölçer, Spektroskop | ✅ |
-| Ses: Ses Ölçer, Frekans Analizörü, Akort Aleti, Ton Üreteci, Oda Yankısı (RT60), Metronom (aksak usuller dahil) | ✅ |
-| Kamera: Büyüteç, QR / Barkod, Cetvel, Nabız, Kozmik Işın Sayacı | ✅ |
+| Işık: Lüksmetre (sensör yoksa kamerayla), Işık Titreşimi, Renk Ölçer, Renk Sıcaklığı, Spektroskop, pH / Bulanıklık | ✅ |
+| Ses: Ses Ölçer, Frekans Analizörü, Akort Aleti, Ton Üreteci, Oda Yankısı (RT60), Sonar Mesafe, Metronom (aksak usuller dahil) | ✅ |
+| Kamera: Büyüteç, QR / Barkod, Cetvel, Nabız, Hız Ölçer (video), Kozmik Işın Sayacı | ✅ |
 | Konum: GPS Durumu, Hassas Konum, Sahte GPS Tespiti, Alan Ölçer, İz Kaydedici (GPX) | ✅ |
-| Kablosuz: Wi-Fi Analizörü, Wi-Fi Mesafe (RTT), Bluetooth Tarayıcı, UWB Mesafe/Yön, NFC Okuyucu/Yazıcı, Kimlik Kartı Okuyucu | ✅ |
+| Kablosuz: Wi-Fi Analizörü, Wi-Fi Mesafe (RTT), Bluetooth Tarayıcı, UWB Mesafe/Yön, NFC Okuyucu/Yazıcı, Kimlik Kartı Okuyucu, IR Kumanda | ✅ |
 | Cihaz: Sensör Testi (çoklu sensör kaydı), Batarya, Ekran Testi, Hoparlör / Mikrofon Testi | ✅ |
-| Kataloğun geri kalanı | "Yakında" kartı olarak görünür; cihazın destekleyip desteklemediği yazar |
 
 ### Kütüphaneler
 
@@ -39,14 +38,14 @@ Her telefona göre tasarlanır: olmayan donanımın araçları gizlenmez, **pasi
 
 - Kimlik kartı verisi hiçbir yere yazılmaz; o ekranda ekran görüntüsü engellenir. Hoparlör / Mikrofon Testi kaydı yalnızca bellekte tutulur.
 - Makine Sağlığı yalnızca ivmeölçer kullanır; makine tabanları `files/machines.json` içindedir. Nabız tıbbi cihaz değildir.
-- Ekran kapalıyken arka planda kayıt yoktur (kayıt sürerken ekran açık tutulur). Lüksmetrenin kamera yedek modu henüz yazılmadı.
+- Ekran kapalıyken arka planda kayıt yoktur (kayıt sürerken ekran açık tutulur).
 
 ## Derleme
 
 Gerekenler: Android Studio (Ladybug veya daha yeni), JDK 17+, Android SDK 35. Kütüphane sürümleri NexYapı ile aynıdır.
 
 ```powershell
-.\gradlew.bat :core:test            # çekirdek testleri (91 test)
+.\gradlew.bat :core:test            # çekirdek testleri (98 test)
 .\gradlew.bat :app:assembleDebug    # deneme APK'sı (com.eirahoutmoss.nextools.debug — gerçek sürümle yan yana kurulur)
 ```
 

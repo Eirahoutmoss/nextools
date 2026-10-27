@@ -30,6 +30,8 @@
     <uses-permission android:name="android.permission.NFC" />
     <!-- UWB Mesafe (Android 12+, "Yakındaki cihazlar" izni) -->
     <uses-permission android:name="android.permission.UWB_RANGING" />
+    <!-- IR Kumanda (normal izin, kullanıcıya sorulmaz) -->
+    <uses-permission android:name="android.permission.TRANSMIT_IR" />
 
     <!-- Kamera araçları. Görüntü cihazda işlenir, kaydedilmez. -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -55,6 +57,7 @@
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
     <uses-feature android:name="android.hardware.nfc" android:required="false" />
     <uses-feature android:name="android.hardware.uwb" android:required="false" />
+    <uses-feature android:name="android.hardware.consumerir" android:required="false" />
     <uses-feature android:name="android.hardware.wifi.rtt" android:required="false" />
 
     <application
