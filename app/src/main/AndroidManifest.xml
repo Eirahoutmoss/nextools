@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- UWB kitaplığı yalnızca Android 12+ cihazlarda kullanılır (UwbTool sürümü denetler). -->
+    <uses-sdk tools:overrideLibrary="androidx.core.uwb" />
+
+    <!-- Yalnızca güncelleme denetimi ve indirmesi için. Ölçüm verisi hiçbir yere gönderilmez. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Uygulama içinden güncelleme kurmak için (doğrudan APK dağıtımı, Nex standardı). -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Ses Seviyesi aracı. Ses kaydedilmez; yalnızca seviye cihazda hesaplanır. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- İsteğe bağlı: pusulada gerçek kuzey (sapma açısı), altimetrede GPS yüksekliği, kayda konum ekleme. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Sensör Testi: Android 12+ cihazlarda 200 Hz üstü örnekleme hızını ölçebilmek için. -->
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
+    <!-- Wi-Fi Analizörü (tarama), Bluetooth Tarayıcı, NFC. Konum çıkarımı için kullanılmaz. -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.NEARBY_WIFI_DEVICES"
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.NFC" />
+    <!-- UWB Mesafe (Android 12+, "Yakındaki cihazlar" izni) -->
+    <uses-permission android:name="android.permission.UWB_RANGING" />
+
+    <!-- Kamera araçları. Görüntü cihazda işlenir, kaydedilmez. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Metal bulucunun titreşimli uyarısı. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Barometre günlüğü (isteğe bağlı) telefon yeniden başlayınca da sürsün diye. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Hiçbir donanım zorunlu değil: olmayan cihazda ilgili araç pasif görünür, uygulama yine kurulur. -->
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.barometer" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.light" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.wifi" android:required="false" />
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
+    <uses-feature android:name="android.hardware.nfc" android:required="false" />
+    <uses-feature android:name="android.hardware.uwb" android:required="false" />
+    <uses-feature android:name="android.hardware.wifi.rtt" android:required="false" />
+
+    <application
+        android:name=".NexToolsApp"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NexTools">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".update.InstallResultReceiver"
+            android:exported="false" />
+
+        <!-- Barometre günlüğü: ~30 dakikada bir tek basınç okuması (yalnızca kullanıcı açarsa). -->
+        <service
+            android:name=".barolog.PressureLogJob"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- QR okuma: Google Play hizmetlerinin kod tarayıcı modülü kurulumda indirilsin. -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode_ui" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+</manifest>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nex_background">#0A0F14</color>
+    <color name="ic_bg_top">#16212D</color>
+    <color name="ic_bg_bottom">#05080C</color>
+</resources>

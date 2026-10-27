@@ -1,0 +1,21 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+.cxx/
+keystore.properties
+*.jks
+*.keystore
+.kotlin/
+
+# Sürüm hazırlama çıktısı (APK + .sha256), GitHub Release olarak yüklenir, depoya girmez
+dist/
+
+# Python önbelleği (metin üreticisi)
+__pycache__/
+
+# Tasarım taslağı (yalnızca yerel; plan bilgisi içerir)
+docs/NexTools-Taslak.md

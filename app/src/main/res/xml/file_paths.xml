@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paylaşılabilen yerler: dışa aktarılan dosyalar, hata kaydı, kayıt fotoğrafı çekimi.
+     Defter'in kendisi (records/) doğrudan paylaşılmaz; dışa aktarmada kopyası çıkarılır. -->
+<paths>
+    <cache-path name="export" path="export/" />
+    <cache-path name="capture" path="capture/" />
+    <files-path name="logs" path="logs/" />
+</paths>

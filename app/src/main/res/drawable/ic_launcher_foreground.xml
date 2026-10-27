@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NexTools simgesi (konsept görseline göre): pusula halkası + iğne, mavi "N", sağ bacakta cetvel çizgileri. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Dış halka -->
+    <path android:pathData="M54,27.5 A26.5,26.5 0 1,1 53.99,27.5 Z"
+        android:strokeColor="#8E99A6" android:strokeWidth="2.2" android:fillColor="#00000000" />
+    <path android:pathData="M60.16,31.01 L60.63,29.27 M65.30,34.43 L66.80,31.83 M70.83,37.17 L72.10,35.90 M73.57,42.70 L76.17,41.20 M76.99,47.84 L78.73,47.37 M76.99,60.16 L78.73,60.63 M73.57,65.30 L76.17,66.80 M70.83,70.83 L72.10,72.10 M65.30,73.57 L66.80,76.17 M60.16,76.99 L60.63,78.73 M47.84,76.99 L47.37,78.73 M42.70,73.57 L41.20,76.17 M37.17,70.83 L35.90,72.10 M34.43,65.30 L31.83,66.80 M31.01,60.16 L29.27,60.63 M31.01,47.84 L29.27,47.37 M34.43,42.70 L31.83,41.20 M37.17,37.17 L35.90,35.90 M42.70,34.43 L41.20,31.83 M47.84,31.01 L47.37,29.27"
+        android:strokeColor="#5C6875" android:strokeWidth="0.9" android:strokeLineCap="round" />
+    <!-- Kuzey iğnesi -->
+    <path android:pathData="M54,19.5 L50.2,31 L57.8,31 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="54" android:startY="19.5" android:endX="54" android:endY="31">
+                <item android:offset="0" android:color="#7CC4FF" />
+                <item android:offset="1" android:color="#1E6FE0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:pathData="M54,87 L51.8,79.5 L56.2,79.5 Z" android:fillColor="#8E99A6" />
+    <!-- N: sol bacak + çapraz (mavi) -->
+    <path android:pathData="M38,72 L38,38 L45.5,38 L45.5,72 Z M38,38 L45.5,38 L70,72 L62.5,72 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="38" android:startY="38" android:endX="66" android:endY="72">
+                <item android:offset="0" android:color="#4FA8FF" />
+                <item android:offset="0.55" android:color="#1E7BF0" />
+                <item android:offset="1" android:color="#0B4FB8" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- N: sağ bacak (gümüş) -->
+    <path android:pathData="M62.5,38 L70,38 L70,72 L62.5,72 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="62.5" android:startY="38" android:endX="70" android:endY="38">
+                <item android:offset="0" android:color="#C9D1DA" />
+                <item android:offset="1" android:color="#7D8894" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:pathData="M66.8,43 L70,43 M68.2,46 L70,46 M66.8,49 L70,49 M68.2,52 L70,52 M66.8,55 L70,55 M68.2,58 L70,58 M66.8,61 L70,61 M68.2,64 L70,64 M66.8,67 L70,67"
+        android:strokeColor="#2A333D" android:strokeWidth="0.8" />
+</vector>
